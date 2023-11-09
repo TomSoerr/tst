@@ -1,0 +1,200 @@
+{
+  "explorer.confirmDragAndDrop": false,
+  "editor.accessibilitySupport": "off",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "editor.wordWrap": "wordWrapColumn",
+  "editor.wordWrapColumn": 80,
+  "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
+  "editor.formatOnSave": true,
+  "editor.renderWhitespace": "all",
+  "editor.linkedEditing": true,
+  "editor.minimap.enabled": false,
+  "workbench.startupEditor": "none",
+  "editor.inlineSuggest.enabled": true,
+  "editor.fontVariations": false,
+  "editor.fontLigatures": true,
+  "editor.fontFamily": "'Comic Code', 'Fira Code', Consolas, 'Courier New', monospace",
+  "editor.fontSize": 16,
+  "editor.rulers": [80],
+  "[git-commit]": { "editor.rulers": [50] },
+
+  // "files.autoSave": "afterDelay",
+  "files.autoSave": "off",
+  "files.autoSaveDelay": 2000,
+
+  "explorer.confirmDelete": false,
+  "security.workspace.trust.untrustedFiles": "open",
+
+  "window.autoDetectColorScheme": true,
+  "workbench.preferredDarkColorTheme": "GitHub Dark Default",
+  "workbench.colorTheme": "GitHub Light",
+  "workbench.preferredHighContrastLightColorTheme": "GitHub Light High Contrast",
+  "workbench.preferredHighContrastColorTheme": "GitHub Dark High Contrast",
+  "workbench.preferredLightColorTheme": "GitHub Light",
+
+  "cSpell.language": "en,en-GB,en-US,de,de-DE,lorem",
+  "cSpell.enableFiletypes": ["shellscript"],
+
+  "liveServer.settings.donotShowInfoMsg": true,
+  "liveServer.settings.donotVerifyTags": true,
+
+  "liveshare.diagnosticMode": true,
+  "liveshare.diagnosticLogging": true,
+
+  "gitlens.codeLens.enabled": false,
+  "git.confirmSync": false,
+
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": true,
+    "markdown": false,
+    "scminput": false,
+    "yaml": false,
+    "django-html": true,
+    "javascript": true,
+    "properties": false,
+    "python": false,
+    "latex": false,
+    "css": true
+  },
+
+  "markdown-pdf.headerTemplate": "",
+  "markdown-pdf.displayHeaderFooter": false,
+  "pylint.showNotifications": "always",
+  "markdown-pdf.executablePath": "/opt/homebrew/bin/chromium",
+  "[markdown]": {
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "[latex]": {
+    "editor.formatOnSave": false
+  },
+
+  "[javascript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // "eslint.experimental.useFlatConfig": true,
+  "eslint.enable": true,
+
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "[python]": {
+    "editor.tabSize": 4,
+    "editor.formatOnType": true,
+    "editor.defaultFormatter": null
+  },
+
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "emmet.includeLanguages": {
+    "django-html": "html",
+    "javascript": "javascriptreact"
+  },
+
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "[php]": {
+    "editor.linkedEditing": false,
+    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
+    "editor.insertSpaces": false
+  },
+
+  "intelephense.stubs": [
+    "apache",
+    "bcmath",
+    "bz2",
+    "calendar",
+    "com_dotnet",
+    "Core",
+    "ctype",
+    "curl",
+    "date",
+    "dba",
+    "dom",
+    "enchant",
+    "exif",
+    "FFI",
+    "fileinfo",
+    "filter",
+    "fpm",
+    "ftp",
+    "gd",
+    "gettext",
+    "gmp",
+    "hash",
+    "iconv",
+    "imap",
+    "intl",
+    "json",
+    "ldap",
+    "libxml",
+    "mbstring",
+    "meta",
+    "mysqli",
+    "oci8",
+    "odbc",
+    "openssl",
+    "pcntl",
+    "pcre",
+    "PDO",
+    "pdo_ibm",
+    "pdo_mysql",
+    "pdo_pgsql",
+    "pdo_sqlite",
+    "pgsql",
+    "Phar",
+    "posix",
+    "pspell",
+    "readline",
+    "Reflection",
+    "session",
+    "shmop",
+    "SimpleXML",
+    "snmp",
+    "soap",
+    "sockets",
+    "sodium",
+    "SPL",
+    "sqlite3",
+    "standard",
+    "superglobals",
+    "sysvmsg",
+    "sysvsem",
+    "sysvshm",
+    "tidy",
+    "tokenizer",
+    "xml",
+    "xmlreader",
+    "xmlrpc",
+    "xmlwriter",
+    "xsl",
+    "Zend OPcache",
+    "zip",
+    "zlib",
+    "wordpress"
+  ],
+  "[handlebars]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "todo-tree.highlights.enabled": false
+}
