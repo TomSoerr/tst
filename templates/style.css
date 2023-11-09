@@ -18,12 +18,158 @@ ________________________________________________________________________________
 0. GENERAL
 ________________________________________________________________________________
 ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯*/
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200");
+
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100;0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;0,9..40,1000;1,9..40,100;1,9..40,200;1,9..40,300;1,9..40,400;1,9..40,500;1,9..40,600;1,9..40,700;1,9..40,800;1,9..40,900;1,9..40,1000&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
 *,
-*:before,
-*:after {
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+*::after,
+*::before {
+  font-family: var(--tst--icon-font);
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 24;
+}
+
+div::after {
+  content: "\e834";
+  display: block;
+  clear: both;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+:root {
+  /* sets font size to 10px and respects user font preferences */
+  font-size: 62.5%;
+  --tst--backup-fonts: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  --tst--text-font: "Atkinson Hyperlegible", sans-serif;
+  --tst--highlight-font: "DM Sans", sans-serif;
+  --tst--icon-font: "Material Symbols Rounded";
+
+  --tst--space-xs: 0.5rem;
+  --tst--space-s: 1rem;
+  --tst--space-m: 2rem;
+  --tst--space-l: 4rem;
+  --tst--space-xl: 8rem;
+
+  --tst--page-width-s: 1440px;
+  --tst--page-width-m: 1668px;
+  --tst--default-page-width: var(--tst--page-width-s);
+
+  --tst--border-radius: 1rem;
+
+  --tst--nav-height: 10rem;
+  --tst--nav-height-scrolled: 8rem;
+  --tst--current-nav-height: var(--tst--nav-height);
+
+  /* 60-30-10 Regel
+   * 60% Primary Color
+   * 30% Secondary Color
+   * 10% Accent Color
+  */
+
+  /* don't use the -mix colors because they don't have a backup */
+  --tst--primary-color: #fff;
+
+  --tst--secondary-color: #00f;
+  --tst--secondary-color-light-mix: color-mix(
+    in srgb,
+    var(--tst--secondary-color),
+    #fff 10%
+  );
+  --tst--secondary-color-light: var(
+    --tst--secondary-color-light-mix,
+    --tst--secondary-color
+  );
+  --tst--secondary-color-dark-mix: color-mix(
+    in srgb,
+    var(--tst--secondary-color),
+    #000 10%
+  );
+  --tst--secondary-color-dark: var(
+    --tst--secondary-color-dark-mix,
+    --tst--secondary-color
+  );
+
+  --tst--accent-color: #f00;
+  --tst--accent-color-light-mix: color-mix(
+    in srgb,
+    var(--tst--accent-color),
+    #fff 10%
+  );
+  --tst--accent-color-light: var(
+    --tst--accent-color-light-mix,
+    --tst--accent-color
+  );
+  --tst--accent-color-dark-mix: color-mix(
+    in srgb,
+    var(--tst--accent-color),
+    #000 10%
+  );
+  --tst--accent-color-dark: var(
+    --tst--accent-color-dark-mix,
+    --tst--accent-color
+  );
+
+  --tst--text-color: #000;
+
+  --tst--background-color-1: var(--tst--primary-color);
+  /* 1% of secondary + primary color */
+  --tst--background-color-2-mix: color-mix(
+    in srgb,
+    var(--tst--primary-color),
+    var(--tst--secondary-color) 1%
+  );
+  /* second is backup if color mix is not supported */
+  --tst--background-color-2: var(
+    --tst--background-color-2-mix,
+    --tst--background-color-1
+  );
+  --tst--background-color-3-mix: color-mix(
+    in srgb,
+    var(--tst--primary-color),
+    var(--tst--secondary-color) 3%
+  );
+  --tst--background-color-3: var(
+    --tst--background-color-3-mix,
+    --tst--background-color-1
+  );
+}
+
+body {
+  font-family: var(--tst--text-font, --tst--backup-fonts);
+  font-size: 1.6rem;
+  line-height: 1.3;
+  color: var(--tst--text-color);
+  background-color: var(--tst--background-color-1);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--tst--highlight-font, --tst--backup-fonts);
+  font-weight: 500;
+  line-height: 1.2;
+  margin-bottom: 0.35em;
 }
 
 /*______________________________________________________________________________
@@ -34,5 +180,52 @@ ________________________________________________________________________________
 ________________________________________________________________________________
 ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯*/
 
+/*______________________________________
+Logo
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯*/
 nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--tst--current-nav-height);
+  z-index: 100;
+  background-color: var(--tst--background-color-3);
+}
+
+nav img {
+  height: var(--tst--current-nav-height);
+  width: 100%;
+}
+
+main > div {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  align-items: stretch;
+}
+
+main > div > div {
+  height: 100%;
+  flex: 1 1 auto;
+}
+
+main > div > div:first-child {
+  background-color: var(--tst--background-color-1);
+}
+
+main > div > div:nth-child(2) {
+  background-color: var(--tst--background-color-2);
+}
+
+main > div > div:nth-child(3) {
+  background-color: var(--tst--primary-color);
+}
+
+main > div > div:nth-child(4) {
+  background-color: var(--tst--secondary-color);
+}
+
+main > div > div:nth-child(5) {
+  background-color: var(--tst--accent-color);
 }
