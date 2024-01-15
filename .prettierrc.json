@@ -1,5 +1,6 @@
 {
   "singleQuote": true,
+  "jsxSingleQuote": false,
   "overrides": [
     {
       "files": ["**/*.css", "**/*.scss", "**/*.html"],

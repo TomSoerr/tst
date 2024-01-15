@@ -34,7 +34,7 @@ ________________________________________________________________________________
 
 *::after,
 *::before {
-  font-family: var(--tst--icon-font);
+  font-family: var(--tst-icon-font);
   font-variation-settings:
     "FILL" 0,
     "wght" 400,
@@ -42,41 +42,44 @@ ________________________________________________________________________________
     "opsz" 24;
 }
 
-div::after {
+a::after {
   content: "\e834";
-  display: block;
   clear: both;
 }
 
 img {
   max-width: 100%;
   height: auto;
+  display: block;
 }
 
 :root {
   /* sets font size to 10px and respects user font preferences */
   font-size: 62.5%;
-  --tst--backup-fonts: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+  --tst-backup-fonts: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  --tst--text-font: "Atkinson Hyperlegible", sans-serif;
-  --tst--highlight-font: "DM Sans", sans-serif;
-  --tst--icon-font: "Material Symbols Rounded";
+  --tst-text-font: "Atkinson Hyperlegible", sans-serif;
+  --tst-highlight-font: "DM Sans", sans-serif;
+  --tst-icon-font: "Material Symbols Rounded";
 
-  --tst--space-xs: 0.5rem;
-  --tst--space-s: 1rem;
-  --tst--space-m: 2rem;
-  --tst--space-l: 4rem;
-  --tst--space-xl: 8rem;
+  --tst-space-xs: 0.5rem;
+  --tst-space-s: 1rem;
+  --tst-space-m: 2rem;
+  --tst-space-l: 4rem;
+  --tst-space-xl: 8rem;
 
-  --tst--page-width-s: 1440px;
-  --tst--page-width-m: 1668px;
-  --tst--default-page-width: var(--tst--page-width-s);
+  --tst-space-y: var(--tst-space-m);
+  --tst-space-x: var(--tst-space-l);
 
-  --tst--border-radius: 1rem;
+  --tst-page-width-s: 1440px;
+  --tst-page-width-m: 1668px;
+  --tst-default-page-width: var(--tst-page-width-s);
 
-  --tst--nav-height: 10rem;
-  --tst--nav-height-scrolled: 8rem;
-  --tst--current-nav-height: var(--tst--nav-height);
+  --tst-border-radius: 1rem;
+
+  --tst-nav-height: 10rem;
+  --tst-nav-height-scrolled: 8rem;
+  --tst-current-nav-height: var(--tst-nav-height);
 
   /* 60-30-10 Regel
    * 60% Primary Color
@@ -84,80 +87,21 @@ img {
    * 10% Accent Color
   */
 
-  /* don't use the -mix colors because they don't have a backup */
-  --tst--primary-color: #fff;
-
-  --tst--secondary-color: #00f;
-  --tst--secondary-color-light-mix: color-mix(
-    in srgb,
-    var(--tst--secondary-color),
-    #fff 10%
-  );
-  --tst--secondary-color-light: var(
-    --tst--secondary-color-light-mix,
-    --tst--secondary-color
-  );
-  --tst--secondary-color-dark-mix: color-mix(
-    in srgb,
-    var(--tst--secondary-color),
-    #000 10%
-  );
-  --tst--secondary-color-dark: var(
-    --tst--secondary-color-dark-mix,
-    --tst--secondary-color
-  );
-
-  --tst--accent-color: #f00;
-  --tst--accent-color-light-mix: color-mix(
-    in srgb,
-    var(--tst--accent-color),
-    #fff 10%
-  );
-  --tst--accent-color-light: var(
-    --tst--accent-color-light-mix,
-    --tst--accent-color
-  );
-  --tst--accent-color-dark-mix: color-mix(
-    in srgb,
-    var(--tst--accent-color),
-    #000 10%
-  );
-  --tst--accent-color-dark: var(
-    --tst--accent-color-dark-mix,
-    --tst--accent-color
-  );
-
-  --tst--text-color: #000;
-
-  --tst--background-color-1: var(--tst--primary-color);
-  /* 1% of secondary + primary color */
-  --tst--background-color-2-mix: color-mix(
-    in srgb,
-    var(--tst--primary-color),
-    var(--tst--secondary-color) 1%
-  );
-  /* second is backup if color mix is not supported */
-  --tst--background-color-2: var(
-    --tst--background-color-2-mix,
-    --tst--background-color-1
-  );
-  --tst--background-color-3-mix: color-mix(
-    in srgb,
-    var(--tst--primary-color),
-    var(--tst--secondary-color) 3%
-  );
-  --tst--background-color-3: var(
-    --tst--background-color-3-mix,
-    --tst--background-color-1
-  );
+  --tst-color-primary: #fff;
+  --tst-color-secondary: #00f;
+  --tst-color-accent: #f00;
+  --tst-color-text: #000;
+  --tst-color-background-1: var(--tst-color-primary);
+  --tst-color-background-2: var(--tst-color-secondary);
 }
 
 body {
-  font-family: var(--tst--text-font, --tst--backup-fonts);
+  font-family: var(--tst-text-font, --tst-backup-fonts);
   font-size: 1.6rem;
   line-height: 1.3;
-  color: var(--tst--text-color);
-  background-color: var(--tst--background-color-1);
+  color: var(--tst-text-color);
+  background-color: var(--tst-background-color-1);
+  margin-top: var(--tst-current-nav-height);
 }
 
 h1,
@@ -166,10 +110,19 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--tst--highlight-font, --tst--backup-fonts);
+  font-family: var(--tst-highlight-font, --tst-backup-fonts);
   font-weight: 500;
   line-height: 1.2;
   margin-bottom: 0.35em;
+}
+
+.dev-lines {
+  position: fixed;
+  border-left: 2px solid gray;
+  border-right: 2px solid gray;
+
+  inset: 0 calc((100vw - var(--tst-default-page-width)) / 2) 0
+    calc((100vw - var(--tst-default-page-width)) / 2);
 }
 
 /*______________________________________________________________________________
@@ -180,52 +133,85 @@ h6 {
 ________________________________________________________________________________
 ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯*/
 
+nav ul,
+footer ul {
+  list-style: none;
+}
+
 /*______________________________________
 Logo
 ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯*/
-nav {
+#tst-site-nav {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: var(--tst--current-nav-height);
+  height: var(--tst-current-nav-height);
   z-index: 100;
-  background-color: var(--tst--background-color-3);
+  background-color: var(--tst-color-text);
+  color: var(--tst-color-primary);
 }
 
-nav img {
-  height: var(--tst--current-nav-height);
-  width: 100%;
+#tst-site-nav > .tst-section-inner {
+  padding: var(--tst-space-s) var(--tst-space-x);
+  display: flex;
+  align-items: center;
+  gap: var(--tst-space-l);
 }
 
-main > div {
+#tst-site-nav > .tst-section-inner ul {
+  display: contents;
+}
+#tst-site-nav img {
+  height: calc(var(--tst-current-nav-height) - 2 * var(--tst-space-s));
+  width: auto;
+  filter: invert(1);
+  margin-right: auto;
+}
+
+#tst-site-nav > div main > div {
   display: flex;
   height: 100vh;
   width: 100vw;
   align-items: stretch;
 }
 
-main > div > div {
-  height: 100%;
-  flex: 1 1 auto;
+/*______________________________________________________________________________
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+2. SECTIONS
+________________________________________________________________________________
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯*/
+
+main {
+  display: contents;
 }
 
-main > div > div:first-child {
-  background-color: var(--tst--background-color-1);
+.tst-section {
+  width: 100vw;
 }
 
-main > div > div:nth-child(2) {
-  background-color: var(--tst--background-color-2);
+.tst-section .tst-section-inner,
+main > :not([class*="section"]) {
+  max-width: calc(var(--tst-default-page-width) + var(--tst-space-x) * 2);
+  margin: 0 auto;
+  padding: var(--tst-space-y) var(--tst-space-x);
 }
 
-main > div > div:nth-child(3) {
-  background-color: var(--tst--primary-color);
+[class*="tst-grid"] > .tst-section-inner {
+  display: grid;
+  grid-gap: var(--tst-space-m);
+  place-items: center;
 }
 
-main > div > div:nth-child(4) {
-  background-color: var(--tst--secondary-color);
+.tst-grid-2 > .tst-section-inner {
+  grid-template-columns: 1fr 1fr;
 }
 
-main > div > div:nth-child(5) {
-  background-color: var(--tst--accent-color);
+[class*="tst-grid-2"] img {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  object-fit: cover;
+  object-position: top;
 }
