@@ -6,9 +6,9 @@ Alle Blöcke sollten hier dokumentiert werden. Um ein einheitliches Entwicklungs
 ## Übersicht
 - Nav
 
-## TODO
-- [ ] Header
-
+## DO's
+TODO: responsive images
+https://developer.mozilla.org/en-US/docs/Web/HTML/Element/source
 
 # Photos 
 https://unsplash.com/@alexshuperart

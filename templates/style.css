@@ -32,19 +32,12 @@ ________________________________________________________________________________
   padding: 0;
 }
 
-*::after,
-*::before {
-  font-family: var(--tst-icon-font);
+.material-symbols-rounded {
   font-variation-settings:
     "FILL" 0,
     "wght" 400,
     "GRAD" 0,
     "opsz" 24;
-}
-
-a::after {
-  content: "\e834";
-  clear: both;
 }
 
 img {
@@ -132,10 +125,24 @@ h6 {
 1. NAVIGATION
 ________________________________________________________________________________
 ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯*/
+/*______________________________________
+Section specific
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯*/
 
 nav ul,
 footer ul {
   list-style: none;
+}
+
+#tst-site-nav > .tst-section-inner {
+  padding: var(--tst-space-s) var(--tst-space-x);
+  display: flex;
+  align-items: center;
+  gap: var(--tst-space-l);
+}
+
+#tst-site-nav > .tst-section-inner ul {
+  display: contents;
 }
 
 /*______________________________________
@@ -152,16 +159,6 @@ Logo
   color: var(--tst-color-primary);
 }
 
-#tst-site-nav > .tst-section-inner {
-  padding: var(--tst-space-s) var(--tst-space-x);
-  display: flex;
-  align-items: center;
-  gap: var(--tst-space-l);
-}
-
-#tst-site-nav > .tst-section-inner ul {
-  display: contents;
-}
 #tst-site-nav img {
   height: calc(var(--tst-current-nav-height) - 2 * var(--tst-space-s));
   width: auto;
@@ -169,12 +166,11 @@ Logo
   margin-right: auto;
 }
 
-#tst-site-nav > div main > div {
-  display: flex;
-  height: 100vh;
-  width: 100vw;
-  align-items: stretch;
-}
+/*______________________________________
+Mobile Layout
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯*/
+
+/* TODO: Check for overflow with js and change to mobile when nav is to wide */
 
 /*______________________________________________________________________________
 ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
