@@ -1,4 +1,4 @@
-import nav from './template-parts/site-nav.js';
+import nav from '../blocks/nav.js';
 
 function load() {
   document.body.append(nav());

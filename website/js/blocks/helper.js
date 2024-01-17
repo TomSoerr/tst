@@ -1,12 +1,22 @@
 export default class Helper {
+  static loadedFn = [];
+
+  static addLoadedFn(fn) {
+    this.loadedFn.push(fn);
+  }
+
+  static loaded() {
+    if (Helper.loadedFn) Helper.loadedFn.forEach((fn) => fn());
+  }
+
   static elements = {};
 
   static create(el, elAtt, elChildren, elEvent) {
-    if (!this.elements[el]) {
-      this.elements[el] = document.createElement(el);
+    if (!Helper.elements[el]) {
+      Helper.elements[el] = document.createElement(el);
     }
 
-    const newEl = this.elements[el].cloneNode(true);
+    const newEl = Helper.elements[el].cloneNode(true);
 
     if (elAtt) {
       Object.entries(elAtt).forEach(([key, value]) => {

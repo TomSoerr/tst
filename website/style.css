@@ -68,6 +68,13 @@ img {
   --tst-page-width-m: 1668px;
   --tst-default-page-width: var(--tst-page-width-s);
 
+  --tst-h1: 4.7rem;
+  --tst-h2: 3.9rem;
+  --tst-h3: 3.3rem;
+  --tst-h4: 2.7rem;
+  --tst-h5: 2.3rem;
+  --tst-h6: 1.9rem;
+
   --tst-border-radius: 1rem;
 
   --tst-nav-height: 10rem;
@@ -145,6 +152,11 @@ footer ul {
   display: contents;
 }
 
+#tst-site-nav > .tst-section-inner ul li {
+  /* not text wrap */
+  white-space: nowrap;
+}
+
 /*______________________________________
 Logo
 ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯*/
@@ -169,6 +181,16 @@ Logo
 /*______________________________________
 Mobile Layout
 ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯*/
+
+#tst-site-nav #tst-menu-btn {
+  appearance: none;
+  background-color: unset;
+  color: var(--tst-color-primary);
+  border: none;
+  margin: 0;
+  padding: 0;
+  font-size: var(--tst-h2);
+}
 
 /* TODO: Check for overflow with js and change to mobile when nav is to wide */
 

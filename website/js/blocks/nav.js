@@ -8,6 +8,18 @@ const navItems = [
   { text: 'Log in', href: '#' },
 ];
 
+// function updateNav() {
+//   alert('important');
+
+//
+// }
+
+Helper.addLoadedFn(() => {
+  const navOuter = document.querySelector('#tst-site-nav');
+  const navInner = navOuter.querySelector('.tst-section-inner');
+  console.log(navOuter, navInner);
+});
+
 export default function nav() {
   return Helper.create('nav', { id: 'tst-site-nav', class: 'tst-section' }, [
     Helper.create('div', { class: 'tst-section-inner' }, [
@@ -26,6 +38,7 @@ export default function nav() {
         'button',
         {
           class: 'material-symbols-rounded',
+          id: 'tst-menu-btn',
           text: 'menu',
         },
         null,
