@@ -141,9 +141,22 @@ footer ul {
   list-style: none;
 }
 
+#tst-site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  height: var(--tst-current-nav-height);
+  z-index: 100;
+  background-color: var(--tst-color-text);
+  color: var(--tst-color-primary);
+}
+
 #tst-site-nav > .tst-section-inner {
   padding: var(--tst-space-s) var(--tst-space-x);
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--tst-space-l);
 }
@@ -152,24 +165,20 @@ footer ul {
   display: contents;
 }
 
-#tst-site-nav > .tst-section-inner ul li {
+#tst-site-nav > .tst-section-inner ul li a {
   /* not text wrap */
   white-space: nowrap;
+  color: var(--tst-color-primary);
+  text-decoration: none;
+  font-size: var(--tst-h5);
+}
+
+#tst-site-nav .tst-section-inner > button {
 }
 
 /*______________________________________
 Logo
 ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯*/
-#tst-site-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: var(--tst-current-nav-height);
-  z-index: 100;
-  background-color: var(--tst-color-text);
-  color: var(--tst-color-primary);
-}
 
 #tst-site-nav img {
   height: calc(var(--tst-current-nav-height) - 2 * var(--tst-space-s));
@@ -184,12 +193,39 @@ Mobile Layout
 
 #tst-site-nav #tst-menu-btn {
   appearance: none;
+  display: none;
+
   background-color: unset;
   color: var(--tst-color-primary);
   border: none;
   margin: 0;
   padding: 0;
   font-size: var(--tst-h2);
+}
+
+#tst-site-nav.tst-nav-mobile #tst-menu-btn {
+  display: block;
+}
+
+#tst-site-nav.tst-nav-mobile {
+  overflow: visible;
+}
+
+#tst-site-nav.tst-nav-mobile > .tst-section-inner ul {
+  display: none;
+}
+
+#tst-site-nav.tst-nav-mobile.tst-nav-open > .tst-section-inner ul {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--tst-color-text);
+  height: calc(100vh - var(--tst-current-nav-height));
+  top: var(--tst-current-nav-height);
+  right: 0;
+  width: max-content;
+  gap: var(--tst-space-l);
+  padding: var(--tst-space-s) var(--tst-space-x);
 }
 
 /* TODO: Check for overflow with js and change to mobile when nav is to wide */
