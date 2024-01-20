@@ -3,20 +3,109 @@ import Helper from './helper.js';
 const navigation = (function navigationIIFE() {
   // TODO: data for the nav should be loaded from json
   // TODO: test what happens when json is wrong or not loaded
-  const navItems = [
-    { text: 'Produkte', href: '#' },
-    { text: 'Geschichte', href: '#' },
-    { text: 'Karriere', href: '#' },
-    { text: 'Kontakt', href: '#' },
-    { text: 'Log in', href: '#' },
-  ];
+  const navItems = {
+    logo: { src: './img/logo.svg', alt: 'Logo' },
+    navigation: [
+      { text: 'Produkte', href: '#' },
+      { text: 'Geschichte', href: '#' },
+      {
+        text: 'Mehr',
+        href: '#',
+        unterpunkte: [
+          { text: 'Unterpunkt 1', href: '#' },
+          { text: 'Unterpunkt 2', href: '#' },
+          { text: 'Unterpunkt 3', href: '#' },
+        ],
+      },
+      { text: 'Kontakt', href: '#' },
+      {
+        text: 'Log in',
+        href: '#',
+        unterpunkte: [
+          { text: 'Unterpunkt 1', href: '#' },
+          { text: 'Unterpunkt 2', href: '#' },
+          { text: 'Unterpunkt 3', href: '#' },
+        ],
+      },
+    ],
+  };
+
+  // --------- nav To Do's ---------
+  // TODO: add sub pages to nav
+  // TODO: load data from settings.json
 
   let navHtmlEl = null;
   let navImgEl = null;
-  let navLiEl = null;
-  let navBreakpoint = null;
   let navImgTimeout = null;
-  let navDesktop = true;
+  let navBreakpoint = null;
+  let scrollTop = null;
+  const scrollHistory = [];
+
+  /* ______________________________________
+  Shrinking Navigation when scrolled
+  ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ */
+
+  function scrolled() {
+    return (
+      document.body.scrollTop > scrollTop ||
+      document.documentElement.scrollTop > scrollTop
+    );
+  }
+
+  function shrinkNav() {
+    if (scrolled()) {
+      document.documentElement.dataset.scrolled = true;
+    } else {
+      document.documentElement.dataset.scrolled = false;
+    }
+  }
+
+  function removePreloadClass() {
+    if (scrolled()) {
+      navHtmlEl.classList.remove('tst-preload');
+      Helper.removeScrollFn(removePreloadClass);
+    }
+  }
+
+  // add function that is called when the window is scrolled
+
+  /* ______________________________________
+  Hide nav when scrolled down on Mobile
+  ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ */
+
+  function hideNavOnScroll() {
+    if (scrollHistory.length < 2) {
+      scrollHistory.push(document.documentElement.scrollTop);
+    } else {
+      scrollHistory.shift();
+      scrollHistory.push(document.documentElement.scrollTop);
+    }
+
+    if (window.innerWidth <= 425 && scrolled()) {
+      if (scrollHistory[0] < scrollHistory[1]) {
+        navHtmlEl.classList.add('tst-nav-hide');
+      } else {
+        navHtmlEl.classList.remove('tst-nav-hide');
+      }
+    }
+  }
+
+  // add function that is called when the window is scrolled
+  Helper.addScrollFn(hideNavOnScroll);
+
+  /* ______________________________________
+  Mobile Navigation
+  ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ */
+
+  function checkNavBreakpoint() {
+    if (window.innerWidth <= navBreakpoint) {
+      navHtmlEl.classList.add('tst-nav-mobile');
+    } else if (window.innerWidth <= 425) {
+      navHtmlEl.classList.add('tst-nav-mobile');
+    } else {
+      navHtmlEl.classList.remove('tst-nav-mobile', 'tst-nav-open');
+    }
+  }
 
   // why: the width of the nav can only be calculated when the image is loaded
   function navImgLoaded() {
@@ -34,46 +123,26 @@ const navigation = (function navigationIIFE() {
     }, navImgTimeout);
   }
 
-  // why: without this function the nav could only collapse but not open again
-  function checkForDesktopLayout() {
-    if (navHtmlEl.clientWidth > navBreakpoint) {
-      navHtmlEl.classList.remove('tst-nav-mobile');
-      navHtmlEl.classList.remove('tst-nav-open');
+  function calculateNavBreakpoint() {
+    let navWidth = 0;
+    const navGap =
+      parseFloat(
+        getComputedStyle(document.body).getPropertyValue('--tst-nav-gap-x'),
+      ) * 10;
+    const navPaddingX =
+      parseFloat(
+        getComputedStyle(document.body).getPropertyValue('--tst-space-x'),
+      ) * 10;
 
-      Helper.removeResizeFn(checkForDesktopLayout);
-      navDesktop = true;
-    }
-  }
+    navWidth += navPaddingX * 2;
+    navWidth += navImgEl.getClientRects()[0].width;
 
-  function updateNav() {
-    const changeNavToMobile = () => {
-      // add listener for a future resize (so the nav can open again)
-      Helper.addResizeFn(checkForDesktopLayout);
+    navHtmlEl.querySelectorAll('.tst-nav-top-level > li').forEach((li) => {
+      navWidth += navGap;
+      navWidth += li.getClientRects()[0].width;
+    });
 
-      // add class to collapse the nav
-      navHtmlEl.classList.add('tst-nav-mobile');
-
-      // set navDesktop to false so this function is not called again
-      navDesktop = false;
-    };
-
-    // if: text links are to many -> nav should collapse
-    if (!navBreakpoint) {
-      if (
-        navDesktop &&
-        navHtmlEl.clientHeight / 2 < navLiEl.getClientRects()[0].top
-      ) {
-        // save breakpoint for later resize
-        navBreakpoint = navHtmlEl.clientWidth;
-
-        changeNavToMobile();
-      }
-    } else if (navDesktop && navHtmlEl.clientWidth <= navBreakpoint) {
-      changeNavToMobile();
-    } else {
-      // debugger;
-      throw new Error('Something went wrong with the nav');
-    }
+    navBreakpoint = Math.ceil(navWidth);
   }
 
   // why: sets the important vars and waits for the image to load
@@ -82,13 +151,23 @@ const navigation = (function navigationIIFE() {
     if (!navHtmlEl) {
       navHtmlEl = document.querySelector('#tst-site-nav');
       navImgEl = navHtmlEl.querySelector('img#tst-site-logo');
-      navLiEl = navHtmlEl.querySelector('ul li:last-child');
     }
     // wait till the image is loaded so the correct nav width can be calculated
     await navImgLoaded();
 
+    // calculate the min width of the nav for the Breakpoint
+    calculateNavBreakpoint();
+
     // check if the nav should collapse after the image is loaded
-    updateNav();
+    checkNavBreakpoint();
+
+    // set the scroll top for the shrink nav function
+    scrollTop = document.querySelector(
+      'main > header:first-child',
+    ).clientHeight;
+
+    Helper.addScrollFn(shrinkNav);
+    Helper.addScrollFn(removePreloadClass);
   }
 
   // add function that is called when the js created content is added to the dom
@@ -96,44 +175,104 @@ const navigation = (function navigationIIFE() {
   // this can only be done with js
   Helper.addInitFn(initNav);
 
-  // why: if the user resizes the window or flips the device
-  // the nav should be checked again
-  Helper.addResizeFn(updateNav);
+  // add function that is called when the window is resized
+  // why: to check if the nav links are to wide for the screen
+  Helper.addResizeFn(checkNavBreakpoint);
 
-  // built the html elements
+  /* ______________________________________
+  HTML Elements
+  ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ */
   function nav() {
-    return Helper.create('nav', { id: 'tst-site-nav', class: 'tst-section' }, [
-      Helper.create('div', { class: 'tst-section-inner' }, [
-        Helper.create('img', { src: './img/logo.svg', id: 'tst-site-logo' }),
-        Helper.create('ul', null, [
-          ...navItems.reduce((acc, item) => {
-            acc.push(
-              Helper.create('li', null, [
-                Helper.create('a', { href: item.href, text: item.text }),
-              ]),
-            );
-            return acc;
-          }, []),
-        ]),
-        Helper.create(
-          'button',
-          {
-            class: 'material-symbols-rounded',
-            id: 'tst-menu-btn',
-            text: 'menu',
-          },
-          null,
-          [
+    return Helper.create(
+      'nav',
+      { id: 'tst-site-nav', class: 'tst-section tst-preload' },
+      [
+        Helper.create('div', { class: 'tst-section-inner' }, [
+          Helper.create('img', { src: './img/logo.svg', id: 'tst-site-logo' }),
+          Helper.create('ul', { class: 'tst-nav-top-level' }, [
+            ...navItems.navigation.reduce((acc, item) => {
+              if (item.unterpunkte) {
+                acc.push(
+                  Helper.create('li', { class: 'tst-nav-sub-level' }, [
+                    Helper.create('a', { href: item.href, text: item.text }),
+                    Helper.create('ul', { class: 'tst-nav-sub-level' }, [
+                      ...item.unterpunkte.reduce((accInner, itemInner) => {
+                        accInner.push(
+                          Helper.create(
+                            'li',
+                            null,
+                            [
+                              Helper.create('a', {
+                                href: itemInner.href,
+                                text: itemInner.text,
+                              }),
+                            ],
+                            [
+                              {
+                                type: 'hover',
+                                listener: () => {
+                                  // TODO: fix loading animation for sub menu and normal menu
+                                },
+                              },
+                            ],
+                          ),
+                        );
+                        return accInner;
+                      }, []),
+                    ]),
+                  ]),
+                );
+                return acc;
+              }
+              acc.push(
+                Helper.create('li', null, [
+                  Helper.create('a', { href: item.href, text: item.text }),
+                ]),
+              );
+              return acc;
+            }, []),
+          ]),
+          Helper.create(
+            'button',
+            {
+              class: 'material-symbols-rounded',
+              id: 'tst-menu-btn',
+              text: 'menu',
+            },
+            null,
+            [
+              {
+                type: 'click',
+                listener: () => {
+                  if (navHtmlEl.classList.contains('tst-nav-open')) {
+                    navHtmlEl.classList.add('tst-nav-close');
+                    setTimeout(() => {
+                      navHtmlEl.classList.remove(
+                        'tst-nav-open',
+                        'tst-nav-close',
+                      );
+                    }, 100);
+                  } else {
+                    navHtmlEl.classList.add('tst-nav-open');
+                  }
+                },
+              },
+            ],
+          ),
+          Helper.create('div', { class: 'tst-nav-overlay' }, null, [
             {
               type: 'click',
               listener: () => {
-                navHtmlEl.classList.toggle('tst-nav-open');
+                navHtmlEl.classList.add('tst-nav-close');
+                setTimeout(() => {
+                  navHtmlEl.classList.remove('tst-nav-open', 'tst-nav-close');
+                }, 100);
               },
             },
-          ],
-        ),
-      ]),
-    ]);
+          ]),
+        ]),
+      ],
+    );
   }
   return {
     nav,

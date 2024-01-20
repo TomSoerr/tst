@@ -1,7 +1,9 @@
 import Helper from './js/blocks/helper.js';
 console.clear();
 
-// initialize Helper class
+/* ______________________________________
+initialize Helper class
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ */
 const observer = new MutationObserver(Helper.init);
 
 observer.observe(document.body, {
@@ -11,8 +13,11 @@ observer.observe(document.body, {
 });
 
 window.addEventListener('resize', Helper.resize);
+window.addEventListener('scroll', Helper.scroll);
 
-// load js file for html site
+/* ______________________________________
+load js file for html site
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ */
 const fileNameRegEx = /\w+(?=\.html)/;
 const fileName = window.location.pathname.match(fileNameRegEx)[0];
 

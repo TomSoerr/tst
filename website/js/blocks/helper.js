@@ -1,5 +1,7 @@
 export default class Helper {
-  // Functions that will load if the dom changes
+  /* ______________________________________
+  Functions that will load if the dom changes
+  ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ */
   static initFn = [];
 
   static addInitFn(fn) {
@@ -16,8 +18,12 @@ export default class Helper {
     });
   }
 
-  // Functions that will load if the window is resized
+  /* ______________________________________
+  Functions that will load if the window is resized
+  ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ */
   static resizeFn = [];
+
+  static resizeTimeout = false;
 
   static addResizeFn(fn) {
     Helper.resizeFn.push(fn);
@@ -28,10 +34,37 @@ export default class Helper {
   }
 
   static resize(event) {
-    if (Helper.resizeFn) Helper.resizeFn.forEach((fn) => fn(event));
+    // add timeout to
+    if (!Helper.navTimeout && Helper.resizeFn) {
+      Helper.resizeFn.forEach((fn) => fn(event));
+
+      Helper.navTimeout = true;
+      setTimeout(() => {
+        Helper.navTimeout = false;
+      }, 100);
+    }
   }
 
-  // Function to build HTML Elements
+  /* ______________________________________
+  Function that will load if user scrolls
+  ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ */
+  static scrollFn = [];
+
+  static addScrollFn(fn) {
+    Helper.scrollFn.push(fn);
+  }
+
+  static removeScrollFn(fn) {
+    Helper.scrollFn = Helper.scrollFn.filter((f) => f !== fn);
+  }
+
+  static scroll(event) {
+    if (Helper.scrollFn) Helper.scrollFn.forEach((fn) => fn(event));
+  }
+
+  /* ______________________________________
+  Function to build HTML Elements
+  ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ */
   static elements = {};
 
   static create(el, elAtt, elChildren, elEvent) {
