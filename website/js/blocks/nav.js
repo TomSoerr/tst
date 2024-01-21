@@ -1,4 +1,5 @@
 import Helper from './helper.js';
+import navLink from './nav-link.js';
 
 const navigation = (function navigationIIFE() {
   // TODO: data for the nav should be loaded from json
@@ -193,42 +194,28 @@ const navigation = (function navigationIIFE() {
             ...navItems.navigation.reduce((acc, item) => {
               if (item.unterpunkte) {
                 acc.push(
-                  Helper.create('li', { class: 'tst-nav-sub-level' }, [
-                    Helper.create('a', { href: item.href, text: item.text }),
-                    Helper.create('ul', { class: 'tst-nav-sub-level' }, [
+                  navLink(
+                    { href: item.href, text: item.text },
+                    Helper.create('ul', null, [
                       ...item.unterpunkte.reduce((accInner, itemInner) => {
                         accInner.push(
-                          Helper.create(
-                            'li',
+                          navLink(
+                            {
+                              href: itemInner.href,
+                              text: itemInner.text,
+                            },
                             null,
-                            [
-                              Helper.create('a', {
-                                href: itemInner.href,
-                                text: itemInner.text,
-                              }),
-                            ],
-                            [
-                              {
-                                type: 'hover',
-                                listener: () => {
-                                  // TODO: fix loading animation for sub menu and normal menu
-                                },
-                              },
-                            ],
+                            true,
                           ),
                         );
                         return accInner;
                       }, []),
                     ]),
-                  ]),
+                  ),
                 );
                 return acc;
               }
-              acc.push(
-                Helper.create('li', null, [
-                  Helper.create('a', { href: item.href, text: item.text }),
-                ]),
-              );
+              acc.push(navLink({ href: item.href, text: item.text }));
               return acc;
             }, []),
           ]),

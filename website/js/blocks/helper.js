@@ -95,7 +95,7 @@ export default class Helper {
 
     if (elEvent) {
       elEvent.forEach((event) => {
-        newEl.addEventListener(event.type, event.listener);
+        if (event) newEl.addEventListener(event.type, event.listener);
       });
     }
 

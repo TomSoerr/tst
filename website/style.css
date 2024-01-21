@@ -235,13 +235,15 @@ footer ul {
   text-decoration: none;
   font-size: var(--tst-text);
   font-weight: 500;
+  display: block;
 }
 
 #tst-site-nav > .tst-section-inner ul li {
   position: relative;
 }
 
-#tst-site-nav > .tst-section-inner > ul li::before {
+#tst-site-nav > .tst-section-inner > ul li:not(.tst-preload)::before,
+#tst-site-nav > .tst-section-inner > ul ul > li.tst-hover::before {
   content: "";
   display: block;
   position: absolute;
@@ -264,7 +266,10 @@ footer ul {
   }
 }
 
-#tst-site-nav > .tst-section-inner > ul li:hover::before {
+#tst-site-nav > .tst-section-inner > ul li:hover::before,
+#tst-site-nav > .tst-section-inner > ul li:focus-within::before,
+#tst-site-nav > .tst-section-inner > ul ul > li.tst-hover:hover::before,
+#tst-site-nav > .tst-section-inner > ul ul > li.tst-hover:focus-within::before {
   animation: link-in 0.3s ease-in-out forwards;
 }
 
@@ -285,21 +290,21 @@ footer ul {
 Sub Menu
 ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯*/
 
-#tst-site-nav > .tst-section-inner > ul .tst-nav-sub-level {
+#tst-site-nav > .tst-section-inner > ul li.tst-nav-sub-level {
   position: relative;
   display: flex;
   gap: 0.3rem;
   align-items: center;
 }
 
-#tst-site-nav > .tst-section-inner > ul .tst-nav-sub-level:has(ul)::after {
+#tst-site-nav > .tst-section-inner > ul li.tst-nav-sub-level::after {
   content: "\e5cf";
   font-family: var(--tst-icon-font);
   right: 0;
   font-size: 2rem;
 }
 
-#tst-site-nav > .tst-section-inner > ul .tst-nav-sub-level > ul {
+#tst-site-nav > .tst-section-inner > ul li.tst-nav-sub-level > ul {
   display: none;
   position: absolute;
   top: 100%;
@@ -311,17 +316,18 @@ Sub Menu
   transform: translate(-50%);
 }
 
-#tst-site-nav > .tst-section-inner > ul .tst-nav-sub-level:last-child > ul {
+#tst-site-nav > .tst-section-inner > ul li.tst-nav-sub-level:last-child > ul {
   transform: translate(var(--tst-space-x));
   right: 0;
   left: unset;
 }
 
-#tst-site-nav > .tst-section-inner > ul .tst-nav-sub-level:hover > ul {
+#tst-site-nav > .tst-section-inner > ul li.tst-nav-sub-level:hover > ul,
+#tst-site-nav > .tst-section-inner > ul li.tst-nav-sub-level:focus-within > ul {
   display: flex;
 }
 
-#tst-site-nav > .tst-section-inner > ul .tst-nav-sub-level {
+#tst-site-nav > .tst-section-inner > ul li.tst-nav-sub-level {
 }
 
 /*______________________________________
