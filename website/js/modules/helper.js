@@ -8,7 +8,6 @@ export default class Helper {
     Helper.initFn.push(fn);
   }
 
-  // could also be called "init"
   static init() {
     // called when the js created content is added to the dom
     Promise.resolve().then(() => {

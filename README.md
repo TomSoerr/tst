@@ -43,3 +43,5 @@ TODO: Section (posts grid (img, h2, teaser))
 # Platzhalter Fotos 
 https://unsplash.com/@alexshuperart
 
+# Lizenz
+Disclaimer for Material Symbols Font: The "Material Symbols" font in this folder is subject to the Apache License, Version 2.0, and is provided by Google. By using or distributing this font, you agree to comply with the terms outlined in the accompanying LICENSE file.

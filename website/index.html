@@ -6,15 +6,37 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0"
     />
+    <script src="./preload.js"></script>
+    <!-- Preload files that are important for every page -->
     <link
-      rel="stylesheet"
-      href="./style.css"
+      href="./js/modules/helper.js"
+      rel="modulepreload"
+      as="script"
+    />
+    <link
+      href="./js/modules/nav.js"
+      rel="modulepreload"
+      as="script"
+    />
+    <link
+      href="./js/modules/nav-link.js"
+      rel="modulepreload"
+      as="script"
     />
     <script
       src="./main.js"
       defer
       type="module"
     ></script>
+    <link
+      href="./img/logo.svg"
+      rel="preload"
+      as="image"
+    />
+    <link
+      rel="stylesheet"
+      href="./style.css"
+    />
     <title>Tom Stöhrer Templates</title>
   </head>
   <body>

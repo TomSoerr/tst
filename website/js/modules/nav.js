@@ -37,7 +37,7 @@ const navigation = (function navigationIIFE() {
 
   let navHtmlEl = null;
   let navImgEl = null;
-  let navImgTimeout = null;
+  let navImgTimeout = 1;
   let navBreakpoint = null;
   let scrollTop = null;
   const scrollHistory = [];
@@ -108,22 +108,23 @@ const navigation = (function navigationIIFE() {
     }
   }
 
+  function calculateTimeout() {
+    navImgTimeout = !navImgTimeout ? 1 : navImgTimeout + navImgTimeout;
+    return navImgTimeout;
+  }
+
   // why: the width of the nav can only be calculated when the image is loaded
   function navImgLoaded() {
     return new Promise((resolve, reject) => {
-      const intervalId = setInterval(() => {
+      (function interval() {
         if (navImgEl.getClientRects()[0].width > 0) {
-          clearInterval(intervalId);
           resolve();
-        } else if (navImgTimeout > 10000) {
-          console.error('navImgLoaded: timeout', navImgTimeout);
-          navImgTimeout = !navImgTimeout ? 1 : navImgTimeout + navImgTimeout;
         } else {
-          console.log('navImgLoaded: waiting', navImgTimeout);
-          navImgTimeout = !navImgTimeout ? 1 : navImgTimeout + navImgTimeout;
+          navImgTimeout += navImgTimeout;
+          setTimeout(interval, navImgTimeout);
         }
-      });
-    }, navImgTimeout);
+      })();
+    });
   }
 
   function calculateNavBreakpoint() {
@@ -226,7 +227,6 @@ const navigation = (function navigationIIFE() {
             {
               class: 'material-symbols-rounded',
               id: 'tst-menu-btn',
-              text: 'menu',
             },
             null,
             [

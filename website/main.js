@@ -1,4 +1,5 @@
-import Helper from './js/blocks/helper.js';
+import Helper from './js/modules/helper.js';
+
 console.clear();
 
 /* ______________________________________
