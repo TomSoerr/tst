@@ -116,8 +116,10 @@ const navigation = (function navigationIIFE() {
           clearInterval(intervalId);
           resolve();
         } else if (navImgTimeout > 10000) {
-          reject(new Error('Image was not loaded'));
+          console.error('navImgLoaded: timeout', navImgTimeout);
+          navImgTimeout = !navImgTimeout ? 1 : navImgTimeout + navImgTimeout;
         } else {
+          console.log('navImgLoaded: waiting', navImgTimeout);
           navImgTimeout = !navImgTimeout ? 1 : navImgTimeout + navImgTimeout;
         }
       });
