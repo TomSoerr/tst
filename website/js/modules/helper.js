@@ -4,25 +4,25 @@ export default class Helper {
   ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ */
   static navItems = {
     logo: { src: './img/logo.svg', alt: 'Logo' },
-    subFolders: ['team'],
     navigation: [
       { text: 'Startseite', href: 'index.html' },
-
       {
         text: 'Produkte',
+        folder: 'produkte',
         href: '#',
         unterpunkte: [
-          { text: 'Seife', href: '#' },
-          { text: 'Seife 2', href: '#' },
+          { text: 'Seife', href: 'seife.html' },
+          { text: 'Seife 2', href: 'seife2.html' },
         ],
       },
       { text: 'Über uns', href: '#' },
       { text: 'Kontakt', href: '#' },
       {
         text: 'Team',
+        folder: 'team',
         href: '#',
         unterpunkte: [
-          { text: 'Thomas Meier', href: '#' },
+          { text: 'Thomas Meier', href: 'thomas.html' },
           { text: 'Martin Müller', href: '#' },
           { text: 'Johann Becker', href: '#' },
         ],
@@ -34,6 +34,91 @@ export default class Helper {
   Functions to get path to produkte.js, pages/*.js, subfolder/*.html, img/*,
   index.html and from subpage to other subpage
   ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ */
+
+  static getAllSubFolders() {
+    const folders = [];
+    this.navItems.navigation.forEach((item) => {
+      if (item.folder) folders.push(item.folder);
+    });
+    return folders;
+  }
+
+  static folderExists(folder) {
+    return this.getAllSubFolders().includes(folder);
+  }
+
+  static getFolderPath(pathname) {
+    const path = pathname;
+
+    if (path === '/' || path === '/index.html' || path === '/index') {
+      return null;
+    }
+
+    const pathWithoutFileRegEx = /.*\//;
+    const lastFolderRegEx = /\w+(?=\/$)/;
+
+    const pathWithoutFile = path.match(pathWithoutFileRegEx);
+
+    if (pathWithoutFile) {
+      const lastFolder = pathWithoutFile[0].match(lastFolderRegEx)[0];
+
+      if (this.folderExists(lastFolder)) {
+        return lastFolder;
+      }
+    }
+    return null;
+  }
+
+  // input should be window.location.pathname
+  static pathToMain(pathname) {
+    const path = pathname;
+
+    if (this.getFolderPath(path)) {
+      return '../';
+    }
+    return '';
+  }
+
+  static getFolderData(fileName) {
+    const subNav = this.navItems.navigation.filter((item) => item.folder);
+    const folder = subNav.find((item) => {
+      // folderObj is undefined if filename is not in the folder
+      const folderObj = item.unterpunkte.find(
+        (pages) => pages.href === fileName,
+      );
+      return folderObj;
+    });
+
+    if (!folder) return null;
+    return folder.folder;
+  }
+
+  static checkIfNotSubpage(fileName) {
+    const notSubNav = this.navItems.navigation.filter((item) => !item.folder);
+    return notSubNav.find((item) => item.href === fileName);
+  }
+
+  static relativPath(from, to) {
+    let relativePath = this.pathToMain(from);
+
+    if (this.getFolderPath(from) === this.getFolderData(to)) {
+      return to;
+    }
+
+    if (this.checkIfNotSubpage(to)) {
+      return `${relativePath}${to}`;
+    }
+
+    return `${this.pathToMain(from)}${this.getFolderData(to)}/${to}`;
+  }
+
+  static absolutePath(path) {
+    const pathWithoutFileRegEx = /.*\//;
+    if (!this.getFolderPath(path)) {
+      // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!""""
+      return `${window.location.origin.pathname}${path}`;
+    }
+  }
 
   /* ______________________________________
   Functions that will load if the dom changes
