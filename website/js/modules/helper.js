@@ -1,5 +1,41 @@
 export default class Helper {
   /* ______________________________________
+  Site structure
+  ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ */
+  static navItems = {
+    logo: { src: './img/logo.svg', alt: 'Logo' },
+    subFolders: ['team'],
+    navigation: [
+      { text: 'Startseite', href: 'index.html' },
+
+      {
+        text: 'Produkte',
+        href: '#',
+        unterpunkte: [
+          { text: 'Seife', href: '#' },
+          { text: 'Seife 2', href: '#' },
+        ],
+      },
+      { text: 'Über uns', href: '#' },
+      { text: 'Kontakt', href: '#' },
+      {
+        text: 'Team',
+        href: '#',
+        unterpunkte: [
+          { text: 'Thomas Meier', href: '#' },
+          { text: 'Martin Müller', href: '#' },
+          { text: 'Johann Becker', href: '#' },
+        ],
+      },
+    ],
+  };
+
+  /* ______________________________________
+  Functions to get path to produkte.js, pages/*.js, subfolder/*.html, img/*,
+  index.html and from subpage to other subpage
+  ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ */
+
+  /* ______________________________________
   Functions that will load if the dom changes
   ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ */
   static initFn = [];

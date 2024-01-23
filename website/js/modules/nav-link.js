@@ -1,37 +1,41 @@
 import Helper from './helper.js';
 
-function removeAfterLoad(element, singleUseEvent) {
+function removeAfterLoad(element, singleUseEventFn) {
   element.classList.remove('tst-preload');
-  element.removeEventListener('mouseover', singleUseEvent);
-  element.removeEventListener('focusin', singleUseEvent);
+  element.removeEventListener('mouseover', singleUseEventFn);
+  element.removeEventListener('focusin', singleUseEventFn);
+}
+
+function getLiElement(target) {
+  if (target.tagName === 'A') {
+    return target.parentElement;
+  }
+  if (target.tagName === 'LI') {
+    return target;
+  }
+  console.error('Invalid target');
 }
 
 function singleUseEvent(event) {
-  if (event.target.tagName !== 'LI') {
-    removeAfterLoad(event.target.parentElement, singleUseEvent);
-  } else {
-    removeAfterLoad(event.target, singleUseEvent);
-  }
+  removeAfterLoad(getLiElement(event.target), singleUseEvent);
   event.stopPropagation();
 }
 
 function customHoverIn(event) {
-  if (event.target.tagName !== 'LI') {
-    event.target.parentElement.classList.add('tst-hover');
-  } else {
-    event.target.classList.add('tst-hover');
-  }
+  getLiElement(event.target).classList.add('tst-hover');
 }
 
 function customHoverOut(event) {
-  if (event.target.tagName !== 'LI') {
-    setTimeout(() => {
-      event.target.parentElement.classList.remove('tst-hover');
-    }, 300);
-  } else {
-    setTimeout(() => {
-      event.target.classList.remove('tst-hover');
-    }, 300);
+  setTimeout(() => {
+    getLiElement(event.target).classList.remove('tst-hover');
+  }, 300);
+}
+
+function clickToOpen(event) {
+  const liElement = getLiElement(event.target);
+  if (liElement.classList.contains('tst-nav-sub-level')) {
+    getLiElement(event.target).classList.toggle('tst-open');
+    event.preventDefault();
   }
 }
 
@@ -47,6 +51,14 @@ const defaultEvent = [
 ];
 
 const subMenuEvent = [
+  {
+    ...defaultEvent,
+    type: 'click',
+    listener: clickToOpen,
+  },
+];
+
+const subMenuItemEvent = [
   {
     type: 'mouseover',
     listener: customHoverIn,
@@ -65,13 +77,13 @@ const subMenuEvent = [
   },
 ];
 
-export default function navLink({ href, text }, subMenu, subMenuItem) {
+export default function navLink({ href, text }, subMenu, isSubMenuItem) {
   return Helper.create(
     'li',
     { class: !subMenu ? 'tst-preload' : 'tst-preload tst-nav-sub-level' },
     !subMenu
       ? [Helper.create('a', { href, text })]
       : [Helper.create('a', { href, text }), subMenu],
-    !subMenuItem ? defaultEvent : subMenuEvent,
+    isSubMenuItem ? subMenuItemEvent : subMenu ? subMenuEvent : defaultEvent,
   );
 }

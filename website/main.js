@@ -20,7 +20,10 @@ window.addEventListener('scroll', Helper.scroll);
 load js file for html site
 ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ */
 const fileNameRegEx = /\w+(?=\.html)/;
-const fileName = window.location.pathname.match(fileNameRegEx)[0];
+let fileName = window.location.pathname.match(fileNameRegEx)[0];
+if (fileName === '') {
+  fileName = 'index';
+}
 
 const siteModule = await import(`./js/pages/${fileName}.js`);
 

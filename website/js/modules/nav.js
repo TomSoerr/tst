@@ -2,44 +2,15 @@ import Helper from './helper.js';
 import navLink from './nav-link.js';
 
 const navigation = (function navigationIIFE() {
-  // TODO: data for the nav should be loaded from json
-  // TODO: test what happens when json is wrong or not loaded
-  const navItems = {
-    logo: { src: './img/logo.svg', alt: 'Logo' },
-    navigation: [
-      { text: 'Produkte', href: '#' },
-      { text: 'Geschichte', href: '#' },
-      {
-        text: 'Mehr',
-        href: '#',
-        unterpunkte: [
-          { text: 'Unterpunkt 1', href: '#' },
-          { text: 'Unterpunkt 2', href: '#' },
-          { text: 'Unterpunkt 3', href: '#' },
-        ],
-      },
-      { text: 'Kontakt', href: '#' },
-      {
-        text: 'Log in',
-        href: '#',
-        unterpunkte: [
-          { text: 'Unterpunkt 1', href: '#' },
-          { text: 'Unterpunkt 2', href: '#' },
-          { text: 'Unterpunkt 3', href: '#' },
-        ],
-      },
-    ],
-  };
-
-  // --------- nav To Do's ---------
-  // TODO: add sub pages to nav
-  // TODO: load data from settings.json
-
   let navHtmlEl = null;
   let navImgEl = null;
+  let navSubMenuEl = null;
   let navImgTimeout = 1;
   let navBreakpoint = null;
   let scrollTop = null;
+  let navIconFontSize = null;
+  let htmlSpaceX = null;
+  let navGapX = null;
   const scrollHistory = [];
 
   /* ______________________________________
@@ -108,11 +79,6 @@ const navigation = (function navigationIIFE() {
     }
   }
 
-  function calculateTimeout() {
-    navImgTimeout = !navImgTimeout ? 1 : navImgTimeout + navImgTimeout;
-    return navImgTimeout;
-  }
-
   // why: the width of the nav can only be calculated when the image is loaded
   function navImgLoaded() {
     return new Promise((resolve, reject) => {
@@ -129,20 +95,13 @@ const navigation = (function navigationIIFE() {
 
   function calculateNavBreakpoint() {
     let navWidth = 0;
-    const navGap =
-      parseFloat(
-        getComputedStyle(document.body).getPropertyValue('--tst-nav-gap-x'),
-      ) * 10;
-    const navPaddingX =
-      parseFloat(
-        getComputedStyle(document.body).getPropertyValue('--tst-space-x'),
-      ) * 10;
 
-    navWidth += navPaddingX * 2;
+    navWidth += navSubMenuEl * navIconFontSize;
+    navWidth += htmlSpaceX * 2;
     navWidth += navImgEl.getClientRects()[0].width;
 
     navHtmlEl.querySelectorAll('.tst-nav-top-level > li').forEach((li) => {
-      navWidth += navGap;
+      navWidth += navGapX;
       navWidth += li.getClientRects()[0].width;
     });
 
@@ -155,6 +114,21 @@ const navigation = (function navigationIIFE() {
     if (!navHtmlEl) {
       navHtmlEl = document.querySelector('#tst-site-nav');
       navImgEl = navHtmlEl.querySelector('img#tst-site-logo');
+      navSubMenuEl = navHtmlEl.querySelectorAll('.tst-nav-sub-level').length;
+      navIconFontSize =
+        parseFloat(
+          getComputedStyle(document.body).getPropertyValue(
+            '--tst-nav-icon-font-size',
+          ),
+        ) * 10;
+      navGapX =
+        parseFloat(
+          getComputedStyle(document.body).getPropertyValue('--tst-nav-gap-x'),
+        ) * 10;
+      htmlSpaceX =
+        parseFloat(
+          getComputedStyle(document.body).getPropertyValue('--tst-space-x'),
+        ) * 10;
     }
     // wait till the image is loaded so the correct nav width can be calculated
     await navImgLoaded();
@@ -194,7 +168,7 @@ const navigation = (function navigationIIFE() {
         Helper.create('div', { class: 'tst-section-inner' }, [
           Helper.create('img', { src: './img/logo.svg', id: 'tst-site-logo' }),
           Helper.create('ul', { class: 'tst-nav-top-level' }, [
-            ...navItems.navigation.reduce((acc, item) => {
+            ...Helper.navItems.navigation.reduce((acc, item) => {
               if (item.unterpunkte) {
                 acc.push(
                   navLink(
@@ -225,7 +199,6 @@ const navigation = (function navigationIIFE() {
           Helper.create(
             'button',
             {
-              class: 'material-symbols-rounded',
               id: 'tst-menu-btn',
             },
             null,
@@ -241,8 +214,11 @@ const navigation = (function navigationIIFE() {
                         'tst-nav-close',
                       );
                     }, 100);
+                    document.body.style.overflow = 'auto';
                   } else {
                     navHtmlEl.classList.add('tst-nav-open');
+                    console.log('open');
+                    document.body.style.overflow = 'hidden';
                   }
                 },
               },
@@ -255,6 +231,7 @@ const navigation = (function navigationIIFE() {
                 navHtmlEl.classList.add('tst-nav-close');
                 setTimeout(() => {
                   navHtmlEl.classList.remove('tst-nav-open', 'tst-nav-close');
+                  document.body.style.overflow = 'auto';
                 }, 100);
               },
             },
