@@ -340,6 +340,7 @@ Desktop: Link animation
 ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯*/
 #tst-site-nav:not(.tst-nav-mobile) > .tst-section-inner ul li {
   position: relative;
+  width: min-content;
 }
 
 #tst-site-nav:not(.tst-nav-mobile)

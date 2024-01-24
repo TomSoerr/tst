@@ -15,7 +15,6 @@ const data = await dataJson.json();
 
 function load() {
   document.body.append(nav());
-  document.body.append(data.hero);
 }
 
 export { load };

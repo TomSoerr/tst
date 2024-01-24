@@ -78,12 +78,13 @@ const subMenuItemEvent = [
 ];
 
 export default function navLink({ href, text }, subMenu, isSubMenuItem) {
+  const relHref = Helper.relativPath(window.location.pathname, href);
   return Helper.create(
     'li',
     { class: !subMenu ? 'tst-preload' : 'tst-preload tst-nav-sub-level' },
     !subMenu
-      ? [Helper.create('a', { href, text })]
-      : [Helper.create('a', { href, text }), subMenu],
+      ? [Helper.create('a', { href: relHref, text })]
+      : [Helper.create('a', { href: relHref, text }), subMenu],
     isSubMenuItem ? subMenuItemEvent : subMenu ? subMenuEvent : defaultEvent,
   );
 }

@@ -166,7 +166,13 @@ const navigation = (function navigationIIFE() {
       { id: 'tst-site-nav', class: 'tst-section tst-preload' },
       [
         Helper.create('div', { class: 'tst-section-inner' }, [
-          Helper.create('img', { src: './img/logo.svg', id: 'tst-site-logo' }),
+          Helper.create('img', {
+            src: `${Helper.pathToMain(window.location.pathname)}${
+              Helper.navItems.logo.src
+            }`,
+            id: 'tst-site-logo',
+            alt: Helper.navItems.logo.alt,
+          }),
           Helper.create('ul', { class: 'tst-nav-top-level' }, [
             ...Helper.navItems.navigation.reduce((acc, item) => {
               if (item.unterpunkte) {
@@ -217,7 +223,6 @@ const navigation = (function navigationIIFE() {
                     document.body.style.overflow = 'auto';
                   } else {
                     navHtmlEl.classList.add('tst-nav-open');
-                    console.log('open');
                     document.body.style.overflow = 'hidden';
                   }
                 },

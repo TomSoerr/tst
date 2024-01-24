@@ -3,7 +3,7 @@ export default class Helper {
   Site structure
   ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ */
   static navItems = {
-    logo: { src: './img/logo.svg', alt: 'Logo' },
+    logo: { src: 'img/logo.svg', alt: 'Logo' },
     navigation: [
       { text: 'Startseite', href: 'index.html' },
       {
@@ -21,11 +21,7 @@ export default class Helper {
         text: 'Team',
         folder: 'team',
         href: '#',
-        unterpunkte: [
-          { text: 'Thomas Meier', href: 'thomas.html' },
-          { text: 'Martin Müller', href: '#' },
-          { text: 'Johann Becker', href: '#' },
-        ],
+        unterpunkte: [{ text: 'Thomas Meier', href: 'thomas.html' }],
       },
     ],
   };
@@ -99,7 +95,7 @@ export default class Helper {
   }
 
   static relativPath(from, to) {
-    let relativePath = this.pathToMain(from);
+    const relativePath = this.pathToMain(from);
 
     if (this.getFolderPath(from) === this.getFolderData(to)) {
       return to;
@@ -112,12 +108,21 @@ export default class Helper {
     return `${this.pathToMain(from)}${this.getFolderData(to)}/${to}`;
   }
 
-  static absolutePath(path) {
+  static absolutePath(pathname, origin) {
     const pathWithoutFileRegEx = /.*\//;
-    if (!this.getFolderPath(path)) {
-      // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!""""
-      return `${window.location.origin.pathname}${path}`;
+    const PathWithoutLastFolder = /.*\/(?=\w*\/)/;
+
+    const pathWithoutFile = pathname.match(pathWithoutFileRegEx);
+
+    if (pathWithoutFile[0] === '/') {
+      return `${origin}/`;
     }
+
+    if (this.getFolderPath(pathname)) {
+      return `${origin}${pathname.match(PathWithoutLastFolder)}`;
+    }
+
+    return `${origin}${pathWithoutFile}`;
   }
 
   /* ______________________________________
