@@ -113,7 +113,7 @@ const navigation = (function navigationIIFE() {
     // if html elements are not queried, do the following
     if (!navHtmlEl) {
       navHtmlEl = document.querySelector('#tst-site-nav');
-      navImgEl = navHtmlEl.querySelector('img#tst-site-logo');
+      navImgEl = navHtmlEl.querySelector('#tst-site-nav #tst-site-logo img');
       navSubMenuEl = navHtmlEl.querySelectorAll('.tst-nav-sub-level').length;
       navIconFontSize =
         parseFloat(
@@ -166,13 +166,22 @@ const navigation = (function navigationIIFE() {
       { id: 'tst-site-nav', class: 'tst-section tst-preload' },
       [
         Helper.create('div', { class: 'tst-section-inner' }, [
-          Helper.create('img', {
-            src: `${Helper.pathToMain(window.location.pathname)}${
-              Helper.navItems.logo.src
-            }`,
-            id: 'tst-site-logo',
-            alt: Helper.navItems.logo.alt,
-          }),
+          Helper.create(
+            'a',
+            {
+              href: `${Helper.pathToMain(window.location.pathname)}index.html`,
+              id: 'tst-site-logo',
+            },
+            [
+              Helper.create('img', {
+                src: `${Helper.pathToMain(window.location.pathname)}${
+                  Helper.navItems.logo.src
+                }`,
+
+                alt: Helper.navItems.logo.alt,
+              }),
+            ],
+          ),
           Helper.create('ul', { class: 'tst-nav-top-level' }, [
             ...Helper.navItems.navigation.reduce((acc, item) => {
               if (item.unterpunkte) {

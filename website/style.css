@@ -249,11 +249,14 @@ Shrinking Nav
 Logo
 ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯*/
 
+#tst-site-nav #tst-site-logo {
+  height: 100%;
+  margin-right: auto;
+}
 #tst-site-nav img {
   height: 100%;
   width: auto;
   filter: invert(1);
-  margin-right: auto;
 }
 
 /*______________________________________
@@ -394,6 +397,9 @@ Desktop: Link animation
 Mobile: Navigation
 ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯*/
 
+#tst-site-nav.tst-nav-open #tst-menu-btn::before {
+  content: "\e5cd";
+}
 #tst-site-nav.tst-nav-mobile #tst-menu-btn {
   display: block;
 }
