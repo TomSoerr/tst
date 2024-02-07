@@ -8,8 +8,8 @@ const path = `${Helper.absolutePath(
 
 const dataJson = await fetch(path, {
   method: 'GET',
-  credentials: 'include',
   mode: 'cors',
+  crossOrigin: 'anonymous',
 });
 const data = await dataJson.json();
 
